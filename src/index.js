@@ -63,7 +63,7 @@ ReactDOM.render(
         type="grafana"
         arc={{
           subArcs: segments,
-          width: 0.4, // Thicker arcs for better visibility
+          width: 0.3, // Thicker arcs for better visibility
           padding: 0.02,
           emptyColor: style.dimmColor,
         }}
