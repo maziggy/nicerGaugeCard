@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/index.js', // Entry point for your code
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'custom-gauge-card.js', // Output file name
+    filename: 'nicer-gauge-card.js', // Output file name
   },
   module: {
     rules: [
