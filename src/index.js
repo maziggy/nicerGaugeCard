@@ -35,17 +35,16 @@ class NicerGaugeCard extends HTMLElement {
         style={{
           backgroundColor: style.bgColor,
           borderRadius: '12px',
-          padding: '0',
+          padding: '0', // Remove any padding
           textAlign: 'center',
           boxSizing: 'border-box',
           position: 'relative',
-          height: '100%', // Match height of the tallest card
-          minHeight: '100px', // Fallback for cards with no explicit height
-          margin: '0',
+          height: 'inherit', // Inherit height from the parent stack
+          margin: '0', // Remove margins to prevent extra space
           display: 'flex',
           flexDirection: 'column', // Align content vertically
-          alignItems: 'center',   // Center content horizontally
-          justifyContent: 'center', // Center content vertically
+          alignItems: 'center',   // Center horizontally
+          justifyContent: 'center', // Center vertically
       }}
     >
         {/* Central Circle for Color */}
