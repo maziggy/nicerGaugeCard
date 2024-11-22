@@ -100,7 +100,7 @@ ReactDOM.render(
           zIndex: 2, // Ensure the text is above the gauge and central circle
         }}
       >
-        <div style={{ fontSize: '1rem', marginTop: '45px' }}>{name}</div>
+        <div style={{ fontSize: '1rem', marginTop: '30px' }}>{name}</div>
         <div style={{ fontSize: '1.8rem', marginTop: '5px' }}>{value.toFixed(1)}</div>
         <div style={{ fontSize: '1rem', marginTop: '5px' }}>%</div>
       </div>
