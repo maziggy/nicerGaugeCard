@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import GaugeComponent from 'react-gauge-component';
 
-class CustomGaugeCard extends HTMLElement {
+class NicerGaugeCard extends HTMLElement {
   set hass(hass) {
     const config = this.config || {};
     const valueRaw = hass.states[config.entity]?.state || 0;
@@ -121,4 +121,4 @@ class CustomGaugeCard extends HTMLElement {
   }
 }
 
-customElements.define('custom-gauge-card', CustomGaugeCard);
+customElements.define('nicer-gauge-card', NicerGaugeCard);
