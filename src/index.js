@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import GaugeComponent from 'react-gauge-component';
 
 class NicerGaugeCard extends HTMLElement {
+  // Called whenever the card receives updated Home Assistant data
   set hass(hass) {
     const config = this.config || {};
-    const valueRaw = hass.states[config.entity]?.state || 0;
-    const name = config.name || "Humidity";
+    const valueRaw = hass.states[config.entity]?.state || 0; // Fetch sensor value
+    const name = config.name || "Gauge";
     const minValue = config.minValue || 0;
     const maxValue = config.maxValue || 100;
 
@@ -17,7 +18,7 @@ class NicerGaugeCard extends HTMLElement {
       { limit: 100, color: '#FF4500' },
     ])
       .map(segment => ({
-        limit: Math.max(minValue, Math.min(segment.limit, maxValue)), // Clamp limit to minValue and maxValue
+        limit: Math.max(minValue, Math.min(segment.limit, maxValue)), // Clamp to min/max values
         color: segment.color,
       }))
       .filter(segment => segment.limit >= minValue && segment.limit <= maxValue); // Remove invalid segments
@@ -28,40 +29,31 @@ class NicerGaugeCard extends HTMLElement {
       dimmColor: config.style?.dimmColor || '#2c2c2e',
     };
 
+    // Parse the sensor value
     const value = parseFloat(valueRaw);
 
+    // Get dynamic height of the parent container (or default to 200px)
+    const parentHeight = this.parentElement?.offsetHeight || 200;
+
+    // Render the React gauge component into the card
     ReactDOM.render(
       <div
         style={{
           backgroundColor: style.bgColor,
           borderRadius: '12px',
-          padding: '0', // Remove any padding
+          padding: '0',
           textAlign: 'center',
           boxSizing: 'border-box',
           position: 'relative',
-          height: 'inherit', // Inherit height from the parent stack
-          margin: '0', // Remove margins to prevent extra space
+          height: `${parentHeight}px`, // Dynamically set height
+          margin: '0',
           display: 'flex',
-          flexDirection: 'column', // Align content vertically
-          alignItems: 'center',   // Center horizontally
-          justifyContent: 'center', // Center vertically
-      }}
-    >
-        {/* Central Circle for Color */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '40%', // Adjust size as needed
-            height: '40%', // Adjust size as needed
-            borderRadius: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 1, // Below the text but above the background
-          }}
-        ></div>
-
-        {/* Inner Display for Title, Value, and Unit */}
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {/* Inner display for name and value */}
         <div
           style={{
             position: 'absolute',
@@ -70,7 +62,7 @@ class NicerGaugeCard extends HTMLElement {
             transform: 'translate(-50%, -50%)',
             textAlign: 'center',
             color: style.textColor,
-            zIndex: 2, // Ensure the text is above the gauge and central circle
+            zIndex: 2, // Ensure the text is above the gauge and background
           }}
         >
           <div style={{ fontSize: '1rem', marginTop: '35px' }}>{name}</div>
@@ -79,50 +71,42 @@ class NicerGaugeCard extends HTMLElement {
         </div>
 
         {/* Gauge Component */}
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            margin: '0',
+        <GaugeComponent
+          type="grafana"
+          arc={{
+            subArcs: segments,
+            width: 0.2,
+            padding: 0.02,
+            emptyColor: style.dimmColor,
           }}
-        >
-          <GaugeComponent
-            type="grafana"
-            arc={{
-              subArcs: segments,
-              width: 0.2,
-              padding: 0.02,
-              emptyColor: style.dimmColor,
-            }}
-            value={value}
-            minValue={minValue}
-            maxValue={maxValue}
-            labels={{
-              valueLabel: {
-                hide: true,
-              },
-              tickLabels: {
-                hideMinMax: true,
-              },
-            }}
-            centralCircle={{
-              size: 0.8,
-              color: 'transparent', // Set to transparent since we're using inline styling
-            }}
-          />
-        </div>
+          value={value}
+          minValue={minValue}
+          maxValue={maxValue}
+          labels={{
+            valueLabel: { hide: true },
+            tickLabels: { hideMinMax: true },
+          }}
+          centralCircle={{
+            size: 0.8,
+            color: 'transparent', // Set to transparent since we're using inline styling
+          }}
+        />
       </div>,
       this
     );
   }
 
+  // Save the card configuration
   setConfig(config) {
     this.config = config;
   }
 
+  // Dynamically calculate card size (rows in the Lovelace grid)
   getCardSize() {
-    return 3;
+    const parentHeight = this.parentElement?.offsetHeight || 200; // Default to 200px if unavailable
+    return Math.ceil(parentHeight / 48); // Estimate rows based on default 48px per row
   }
 }
 
+// Define the custom element
 customElements.define('nicer-gauge-card', NicerGaugeCard);
