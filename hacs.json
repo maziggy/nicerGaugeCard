@@ -11,5 +11,5 @@
   "issues": "https://github.com/maziggy/nicerGaugeCard/issues",
   "dependencies": [],
   "codeowners": ["@maziggy"],
-  "filename": "nicer-gauge-card.js"
+  "filename": "dist/nicer-gauge-card.js"
 }
