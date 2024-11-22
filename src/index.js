@@ -40,7 +40,7 @@ class NicerGaugeCard extends HTMLElement {
           boxSizing: 'border-box',
           position: 'relative',
           height: '100%', // Match height of the tallest card
-          minHeight: '140px', // Fallback for cards with no explicit height
+          minHeight: '100px', // Fallback for cards with no explicit height
           margin: '0',
           display: 'flex',
           flexDirection: 'column', // Align content vertically
