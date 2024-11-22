@@ -39,10 +39,14 @@ class NicerGaugeCard extends HTMLElement {
           textAlign: 'center',
           boxSizing: 'border-box',
           position: 'relative',
-          height: '140px',
+          height: '100%', // Allow dynamic height
+          minHeight: '140px', // Optional minimum height fallback
           margin: '0',
-        }}
-      >
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center', // Center content properly
+      }}
+    >
         {/* Central Circle for Color */}
         <div
           style={{
