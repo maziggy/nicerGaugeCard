@@ -31,86 +31,84 @@ class NicerGaugeCard extends HTMLElement {
 
     const value = parseFloat(valueRaw);
 
-    ReactDOM.render(
+ReactDOM.render(
+  <div
+    style={{
+      backgroundColor: style.bgColor,
+      borderRadius: '12px',
+      display: 'flex', // Flexbox for centering
+      justifyContent: 'center', // Center horizontally
+      alignItems: 'center', // Center vertically
+      textAlign: 'center',
+      boxSizing: 'border-box',
+      position: 'relative',
+      height: height,
+      width: '100%',
+      margin: '0',
+    }}
+  >
+    {/* Combined Gauge and Text */}
+    <div
+      style={{
+        display: 'flex', // Ensure the gauge and text are together
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '95%', // Make gauge larger (increase width)
+        height: '95%', // Make gauge larger (increase height)
+      }}
+    >
+      {/* Gauge Component */}
+      <GaugeComponent
+        type="grafana"
+        arc={{
+          subArcs: segments,
+          width: 0.4, // Thicker arcs for better visibility
+          padding: 0.02,
+          emptyColor: style.dimmColor,
+        }}
+        value={value}
+        minValue={minValue}
+        maxValue={maxValue}
+        labels={{
+          valueLabel: {
+            hide: true,
+          },
+          tickLabels: {
+            hideMinMax: true,
+          },
+        }}
+        centralCircle={{
+          size: 0.7,
+          color: 'transparent',
+        }}
+        style={{
+          width: '100%', // Ensure the gauge fills the allocated space
+          height: '100%', // Ensure the gauge fills the allocated space
+        }}
+      />
+
+      {/* Inner Display for Title, Value, and Unit */}
       <div
         style={{
-          backgroundColor: style.bgColor,
-          borderRadius: '12px',
-          padding: '0',
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
           textAlign: 'center',
-          boxSizing: 'border-box',
-          position: 'relative',
-          height: height,
-          margin: '0',
+          color: style.textColor,
+          zIndex: 2, // Ensure the text is above the gauge and central circle
         }}
       >
-        {/* Central Circle for Color */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '40%', // Adjust size as needed
-            height: '40%', // Adjust size as needed
-            borderRadius: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 1, // Below the text but above the background
-          }}
-        ></div>
+        <div style={{ fontSize: '1rem', marginTop: '45px' }}>{name}</div>
+        <div style={{ fontSize: '1.8rem', marginTop: '5px' }}>{value.toFixed(1)}</div>
+        <div style={{ fontSize: '1rem', marginTop: '5px' }}>%</div>
+      </div>
+    </div>
+  </div>,
+  this
+);
 
-        {/* Inner Display for Title, Value, and Unit */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            textAlign: 'center',
-            color: style.textColor,
-            zIndex: 2, // Ensure the text is above the gauge and central circle
-          }}
-        >
-          <div style={{ fontSize: '1rem', marginTop: '35px' }}>{name}</div>
-          <div style={{ fontSize: '1.8rem', marginTop: '10px' }}>{value.toFixed(1)}</div>
-          <div style={{ fontSize: '1rem', marginTop: '5px' }}>%</div>
-        </div>
-
-        {/* Gauge Component */}
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            margin: '0',
-          }}
-        >
-          <GaugeComponent
-            type="grafana"
-            arc={{
-              subArcs: segments,
-              width: 0.2,
-              padding: 0.02,
-              emptyColor: style.dimmColor,
-            }}
-            value={value}
-            minValue={minValue}
-            maxValue={maxValue}
-            labels={{
-              valueLabel: {
-                hide: true,
-              },
-              tickLabels: {
-                hideMinMax: true,
-              },
-            }}
-            centralCircle={{
-              size: 0.8,
-              color: 'transparent', // Set to transparent since we're using inline styling
-            }}
-          />
-        </div>
-      </div>,
-      this
-    );
   }
 
   setConfig(config) {
@@ -122,4 +120,4 @@ class NicerGaugeCard extends HTMLElement {
   }
 }
 
-customElements.define('nicer-gauge-card', NicerGaugeCard);nicerGaugeCard
+customElements.define('nicer-gauge-card', NicerGaugeCard);nicerGaugeCardnicerGaugeCard
