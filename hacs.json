@@ -3,7 +3,7 @@
   "description": "A custom gauge card, that looks nicer ;)",
   "content_in_root": false,
   "render_readme": true,
-  "domains": ["lovelace"],
+  "domains": ["dashboard"],
   "country": "DE",
   "iot_class": "local_polling",
   "documentation": "https://github.com/maziggy/nicerGaugeCard#readme",
