@@ -5,8 +5,10 @@ import GaugeComponent from 'react-gauge-component';
 class NicerGaugeCard extends HTMLElement {
   set hass(hass) {
     const config = this.config || {};
+    const entity = config.entity || 'sensor.humidity';
     const valueRaw = hass.states[config.entity]?.state || 0;
     const name = config.name || "Humidity";
+    const unit = config.unit || "%"
     const minValue = config.minValue || 0;
     const maxValue = config.maxValue || 100;
     const height = config.height || '100%';
@@ -101,10 +103,24 @@ ReactDOM.render(
         }}
       >
         <div style={{ fontSize: '1rem', marginTop: '30px' }}>{name}</div>
-        <div style={{ fontSize: '1.8rem', marginTop: '5px' }}>{value.toFixed(1)}</div>
-        <div style={{ fontSize: '1rem', marginTop: '5px' }}>%</div>
+        <div
+          style={{
+            fontSize: '1.8rem',
+            marginTop: '5px',
+            cursor: 'pointer', // Indicate that this is clickable
+            textDecoration: 'none', // Optional: Make it look like a link
+          }}
+          onClick={() => {
+            const event = new Event('hass-more-info', { bubbles: true, composed: true });
+            event.detail = { entityId: config.entity };
+            this.dispatchEvent(event);
+          }}
+        >
+          {value.toFixed(1)}
+        </div>
+        <div style={{ fontSize: '1rem', marginTop: '5px' }}>{unit}</div>
       </div>
-    </div>
+          </div>
   </div>,
   this
 );
