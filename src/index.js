@@ -143,4 +143,3 @@ class NicerGaugeCard extends HTMLElement {
 }
 
 customElements.define("nicer-gauge-card", NicerGaugeCard);
-nicerGaugeCardnicerGaugeCard;
