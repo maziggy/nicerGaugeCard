@@ -6,7 +6,7 @@ class NicerGaugeCard extends HTMLElement {
   set hass(hass) {
     const config = this.config || {};
     const entity = config.entity || "sensor.humidity";
-    const valueRaw = hass.states[config.entity]?.state || 0;
+    const valueRaw = hass.states[config.entity]?.state || 0.0;
     const name = config.name || "Humidity";
     const unit = config.unit || "%";
     const minValue = config.minValue || 0;
@@ -123,7 +123,7 @@ class NicerGaugeCard extends HTMLElement {
                 this.dispatchEvent(event);
               }}
             >
-              {value.toFixed(1)}
+              {value.toFixed(2)}
             </div>
             <div style={{ fontSize: "1rem", marginTop: "5px" }}>{unit}</div>
           </div>
