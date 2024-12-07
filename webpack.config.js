@@ -1,10 +1,8 @@
-const path = require('path');
-
 module.exports = {
   mode: 'production',
   entry: './src/index.js', // Entry point for your code
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: __dirname,
     filename: 'nicer-gauge-card.js', // Output file name
   },
   module: {
